@@ -43,6 +43,7 @@ export class CheckboxComponent implements ControlValueAccessor {
     if (!this.disabled) {
       this.toggle();
     }
+    this.emitChange();
   }
 
   @HostBinding()
@@ -126,4 +127,12 @@ export class CheckboxComponent implements ControlValueAccessor {
   private onChangeCallback = (_: any) => {
     // placeholder
   };
+
+  private emitChange() {
+    this.change.emit({
+      stopPropagation: () => {},
+      timeStamp: new CustomEvent('change').timeStamp,
+      target: { checked: this._value }
+    } as any);
+  }
 }
